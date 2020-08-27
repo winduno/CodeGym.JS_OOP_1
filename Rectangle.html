@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rectangle</title>
+</head>
+<body>
+<input type="number" id="wid" placeholder="Dài">
+<input type="number" id="hei" placeholder="Rộng"><br>
+<button type="button" onclick="createRect()">Xong</button>
+<p  id="print"></p>
+<br>
+<canvas id="canvas" width="1368px" height="768px" style="border:1px solid #d3d3d3;"/>
+</body>
+</html>
+<script>
+
+    function Rectagle(width, height) {
+        this.width = width;
+        this.height = height;
+        
+        this.perimeter = function (width, height) {
+            return width*2 + height*2;
+        }
+        this.area = function (width, height) {
+            return width * height;
+        }
+        
+        this.drawRect = function (ele) {
+            let drawPos = document.getElementById("canvas").getContext("2d");
+            let color = getRandomColor();
+            drawPos.beginPath();
+            drawPos.rect(500, 500, ele.width, ele.height);
+            drawPos.fillStyle = color;
+            drawPos.fill();
+        }
+    }
+
+    function getRandomHex(){
+        return Math.floor(Math.random()*255);
+    }
+
+    function getRandomColor(){
+        let red = getRandomHex();
+        let green = getRandomHex();
+        let blue = getRandomHex();
+        return "rgb(" + red + "," + blue + "," + green +")";
+    }
+
+    function createRect() {
+        let wid = document.getElementById("wid").value;
+        let hei = document.getElementById("hei").value;
+        let rect = new Rectagle(wid, hei);
+        document.getElementById("print").innerHTML= "Diện tích: " + rect.area(rect.width, rect.height) +
+            "<br>Chu vi: " + rect.perimeter(rect.width, rect.height);
+
+        rect.drawRect(rect)
+
+        // document.getElementById("print").innerText = "Diện tích: " + rect1.
+    }
+</script>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mobile</title>
+</head>
+<body>
+<h1>Nokia</h1>
+<textarea name="textNokia" id="idTextNokia" cols="50" rows="10"></textarea> <br>
+<button id="nokiaSave" onclick="SaveSMS('nokia')">Save</button>
+<button id="nokiaSMS" onclick="ShowTextSaved('nokia')">Show SMS Saved</button>
+<button id="nokiaInbox" onclick="CheckInbox('nokia')">Inbox</button>
+<button id="nokiaSent" onclick="SendSMS('nokia')">Send</button>
+<hr>
+<h1>iPhone</h1>
+<textarea name="textIphone" id="idTextIphone" cols="50" rows="10"></textarea> <br>
+<button id="iphoneSave" onclick="SaveSMS('iphone')">Save</button>
+<button id="iphoneSMS" onclick="ShowTextSaved('iphone')">Show SMS Saved</button>
+<button id="iphoneInbox" onclick="CheckInbox('iphone')">Inbox</button>
+<button id="iphoneSent" onclick="SendSMS('iphone')">Send</button>
+</body>
+</html>
+<script>
+    let nokia = new Mobile();
+    let iphone = new Mobile();
+    let nokiaText = document.getElementById("idTextNokia");
+    let iphoneText = document.getElementById("idTextIphone");
+    function SendSMS(sender) {
+        if (sender == 'nokia'){
+            nokia.sendMes(nokiaText.value, iphone);
+        }
+        else{
+            iphone.sendMes(iphoneText.value, nokia);
+        }
+    }
+
+    function SaveSMS(mobile) {
+        if (mobile == "nokia"){
+            nokia.text = nokiaText.value;
+        }
+        else{
+            iphone.text = iphoneText.value;
+        }
+    }
+
+    function CheckInbox(mobile) {
+        if (mobile == 'nokia'){
+            nokiaText.value = nokia.inbox;
+        }
+        else{
+            iphoneText.value = iphone.inbox;
+        }
+    }
+
+    function ShowTextSaved(mobile) {
+        if (mobile == 'nokia'){
+            nokiaText.value = nokia.text;
+        }
+        else{
+            iphoneText.value = iphone.text;
+        }
+    }
+
+    function Mobile() {
+        this.text = "";
+        this.inbox = "";
+        this.sent = "";
+        this.status = true;
+
+        this.checkOnOff = function (status) {
+            return status;
+        }
+
+        this.turnOnOff = function (status) {
+            return !status;
+        }
+
+        this.textingMes = function (mes) {
+            this.text = mes;
+        }
+
+        this.recievedMes = function (mes) {
+            this.inbox = mes;
+        }
+
+        this.sendMes = function (mes, mobile) {
+            this.sent = mes;
+            mobile.recievedMes(mes);
+        }
+
+        this.viewSentMess = function (){
+           alert(this.sent);
+        }
+
+        this.viewInboxMes = function () {
+            alert(this.inbox);
+        }
+    }
+</script>

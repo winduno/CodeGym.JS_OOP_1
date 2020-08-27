@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Temperature</title>
+</head>
+<body>
+<input type="number" id="celcius" placeholder="Nhập nhiệt độ" oninput="exchange()">
+<p  id="print"></p>
+</body>
+</html>
+<script>
+    function Temperature(temp) {
+        if (temp < -273){
+            this.celcius = -273;
+        }
+        else {
+            this.celcius = temp;
+        }
+
+        this.toFahrenheit = function (cel) {
+            return (cel * 1.8) + 32;
+        }
+
+        this.toKenvin = function (cel) {
+            return cel + 273.15;
+        }
+    }
+
+    function exchange() {
+        let temp1 = new Temperature(parseFloat(document.getElementById("celcius").value));
+        document.getElementById("print").innerHTML = "Độ F: " + temp1.toFahrenheit(temp1.celcius) +
+            "<br>Độ K: " + temp1.toKenvin(temp1.celcius);
+    }
+</script>
